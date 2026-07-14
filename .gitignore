@@ -1,0 +1,25 @@
+# Config lokal (jangan commit)
+.env
+php/config.php
+
+# Database
+*.db
+*.db-journal
+
+# PHP
+php/vendor/
+
+# Node (wa-service)
+wa-service/node_modules/
+wa-service/.env
+wa-service/.wwebjs_auth/
+wa-service/.wwebjs_cache/
+
+# Sisa setup lama (jika ada)
+.wwebjs_auth/
+.wwebjs_cache/
+node_modules/
+
+# OS
+Thumbs.db
+.DS_Store
