@@ -1,13 +1,15 @@
-# Config lokal (jangan commit)
+﻿# Config lokal (jangan commit)
 .env
-php/config.php
+config.php
 
 # Database
 *.db
 *.db-journal
+*.db-shm
+*.db-wal
 
 # PHP
-php/vendor/
+vendor/
 
 # Node (wa-service)
 wa-service/node_modules/
@@ -19,6 +21,8 @@ wa-service/.wwebjs_cache/
 .wwebjs_auth/
 .wwebjs_cache/
 node_modules/
+public/
+server/
 
 # OS
 Thumbs.db

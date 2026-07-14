@@ -1,0 +1,27 @@
+RewriteEngine On
+
+# Halaman utama → index.php (isi {{ guestName }} dari MySQL)
+DirectoryIndex index.php
+
+# API routing — agar admin.js & script.js tidak perlu diubah
+RewriteRule ^api/guest$ api/guest.php [L,QSA]
+RewriteRule ^api/komentar$ api/komentar.php [L,QSA]
+
+RewriteRule ^api/admin/me$ api/admin/me.php [L,QSA]
+RewriteRule ^api/admin/login$ api/admin/login.php [L,QSA]
+RewriteRule ^api/admin/logout$ api/admin/logout.php [L,QSA]
+RewriteRule ^api/admin/upload$ api/admin/upload.php [L,QSA]
+RewriteRule ^api/admin/kirim$ api/admin/kirim.php [L,QSA]
+RewriteRule ^api/admin/undangan$ api/admin/undangan.php [L,QSA]
+RewriteRule ^api/admin/undangan/([0-9]+)$ api/admin/undangan.php?id=$1 [L,QSA]
+RewriteRule ^api/admin/komentar$ api/admin/komentar.php [L,QSA]
+RewriteRule ^api/admin/komentar/([0-9]+)$ api/admin/komentar.php?id=$1 [L,QSA]
+
+RewriteRule ^api/admin/wa/status$ api/admin/wa/status.php [L,QSA]
+RewriteRule ^api/admin/wa/qr$ api/admin/wa/qr.php [L,QSA]
+RewriteRule ^api/admin/wa/init$ api/admin/wa/init.php [L,QSA]
+RewriteRule ^api/admin/wa/logout$ api/admin/wa/logout.php [L,QSA]
+
+# Blok akses langsung ke config & lib
+RewriteRule ^config\.php$ - [F,L]
+RewriteRule ^lib/ - [F,L]

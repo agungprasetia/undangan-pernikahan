@@ -1,0 +1,96 @@
+:root{
+  --bg:#0f1115;--panel:#171a21;--panel-2:#1e232c;--line:#2a2f3a;
+  --text:#e7e9ee;--muted:#8b93a1;--gold:#c9a15a;--green:#25d366;--red:#e35d5d;--blue:#4a90d9;
+}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif}
+body{background:var(--bg);color:var(--text);min-height:100vh}
+.hidden{display:none!important}
+code{background:#00000040;padding:1px 6px;border-radius:5px;color:var(--gold);font-size:.85em}
+
+/* LOGIN */
+.login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;
+  background:radial-gradient(circle at 50% 0%,#1b2029,#0f1115 70%)}
+.login-card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:40px 34px;width:100%;max-width:360px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.login-logo{font-size:2.6rem}
+.login-card h1{font-size:1.4rem;margin-top:10px}
+.login-card p{color:var(--muted);font-size:.85rem;margin-bottom:22px}
+.login-card input{width:100%;padding:13px 15px;border-radius:10px;border:1px solid var(--line);background:var(--panel-2);color:var(--text);margin-bottom:12px}
+.login-card button{width:100%;padding:13px;border:none;border-radius:10px;background:var(--gold);color:#1a1300;font-weight:600;cursor:pointer;transition:.2s}
+.login-card button:hover{filter:brightness(1.1)}
+.login-err{color:var(--red);font-size:.8rem;min-height:1em;margin-top:10px}
+
+/* DASHBOARD */
+.topbar{display:flex;align-items:center;gap:16px;padding:14px 22px;background:var(--panel);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:10;flex-wrap:wrap}
+.brand{font-weight:600;color:var(--gold)}
+.tabs{display:flex;gap:6px;margin-left:auto}
+.tab{background:transparent;border:1px solid var(--line);color:var(--muted);padding:8px 16px;border-radius:8px;cursor:pointer;font-size:.85rem;transition:.2s}
+.tab.active{background:var(--panel-2);color:var(--text);border-color:var(--gold)}
+.btn-ghost{background:transparent;border:1px solid var(--line);color:var(--muted);padding:8px 14px;border-radius:8px;cursor:pointer;font-size:.82rem}
+
+.panel{display:none;padding:22px;max-width:960px;margin:0 auto}
+.panel.active{display:block;animation:fade .3s ease}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px}
+.stat{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px;text-align:center}
+.stat span{font-size:1.9rem;font-weight:600;color:var(--gold)}
+.stat small{display:block;color:var(--muted);font-size:.72rem;margin-top:4px}
+
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:20px;margin-bottom:14px}
+.card h3{font-size:1rem;margin-bottom:6px}
+.hint{color:var(--muted);font-size:.78rem;line-height:1.6;margin-bottom:12px}
+.card input[type=file],.card input[type=text]{width:100%;padding:11px 13px;border-radius:9px;border:1px solid var(--line);background:var(--panel-2);color:var(--text);margin-bottom:10px;font-size:.85rem}
+.card button{padding:11px 18px;border:none;border-radius:9px;background:var(--gold);color:#1a1300;font-weight:600;cursor:pointer;font-size:.82rem;transition:.2s}
+.card button:hover{filter:brightness(1.1)}
+.row-form{display:flex;flex-direction:column}
+.tmpl-link{display:inline-block;margin-top:6px;color:var(--blue);font-size:.76rem;text-decoration:none}
+.msg{font-size:.78rem;margin-top:8px;min-height:1em}
+.msg.ok{color:var(--green)}.msg.err{color:var(--red)}
+
+.card-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.chk{font-size:.76rem;color:var(--muted);display:flex;align-items:center;gap:6px;cursor:pointer}
+.btn-primary{padding:10px 16px;border:none;border-radius:9px;background:var(--green);color:#03210f;font-weight:600;cursor:pointer;font-size:.82rem}
+.btn-danger{padding:10px 16px;border:1px solid var(--red);border-radius:9px;background:transparent;color:var(--red);cursor:pointer;font-size:.82rem}
+
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:.83rem}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line)}
+th{color:var(--muted);font-weight:500;font-size:.72rem;text-transform:uppercase;letter-spacing:.05em}
+.tag{font-size:.68rem;padding:3px 9px;border-radius:20px}
+.tag.sent{background:#12351f;color:var(--green)}
+.tag.unsent{background:#3a2a12;color:var(--gold)}
+.del{background:transparent!important;border:none;color:var(--red)!important;cursor:pointer;font-size:1rem;padding:2px 6px!important}
+
+/* Hasil kirim */
+#send-result .r{display:flex;justify-content:space-between;gap:10px;padding:8px 10px;border-bottom:1px solid var(--line);font-size:.8rem}
+#send-result a{color:var(--blue)}
+.st-terkirim{color:var(--green)}.st-gagal{color:var(--red)}.st-link{color:var(--blue)}
+
+/* WhatsApp */
+.wa-card{max-width:520px}
+.wa-status{margin:8px 0 16px;font-size:.85rem}
+.badge-status{padding:3px 12px;border-radius:20px;background:var(--panel-2);border:1px solid var(--line);font-size:.75rem}
+.badge-status.ready{background:#12351f;color:var(--green);border-color:var(--green)}
+.badge-status.qr{background:#3a2a12;color:var(--gold);border-color:var(--gold)}
+.badge-status.error,.badge-status.disconnected{background:#3a1212;color:var(--red);border-color:var(--red)}
+.wa-qr{text-align:center;margin:16px 0}
+.wa-qr img{background:#fff;padding:12px;border-radius:12px;max-width:280px}
+.wa-actions{display:flex;gap:10px;margin-top:8px}
+
+/* Ucapan */
+.pill{background:var(--panel-2);border:1px solid var(--line);padding:2px 12px;border-radius:20px;font-size:.75rem;color:var(--muted)}
+.ucapan-list{display:flex;flex-direction:column;gap:10px}
+.uc{background:var(--panel-2);border:1px solid var(--line);border-radius:12px;padding:14px}
+.uc .uh{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.uc strong{color:var(--gold)}
+.uc .badge{font-size:.66rem;padding:2px 8px;border-radius:12px;background:#00000040;color:var(--muted)}
+.uc p{font-size:.85rem;margin-top:6px;color:var(--text)}
+.uc .ud{font-size:.68rem;color:var(--muted);margin-top:6px}
+
+@media(max-width:640px){
+  .cards{grid-template-columns:1fr}
+  .tabs{width:100%;order:3}
+  .tab{flex:1}
+}
