@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Admin — Undangan Elia &amp; Lutfi</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="admin.css" />
+  <link rel="stylesheet" href="/admin/admin.css" />
 </head>
 <body>
 
@@ -37,14 +37,14 @@
     <section class="panel active" data-panel="undangan">
       <div class="stats">
         <div class="stat"><span id="stat-total">0</span><small>Total Undangan</small></div>
-        <div class="stat"><span id="stat-terkirim">0</span><small>Terkirim</small></div>
-        <div class="stat"><span id="stat-belum">0</span><small>Belum Dikirim</small></div>
+        <div class="stat"><span id="stat-terkirim">0</span><small>WA Terkirim</small></div>
+        <div class="stat"><span id="stat-ig">0</span><small>IG Siap / Selesai</small></div>
       </div>
 
       <div class="cards">
         <div class="card">
           <h3>📄 Upload Spreadsheet</h3>
-          <p class="hint">Format kolom: <code>no</code> &amp; <code>nama</code> (mendukung .xlsx, .xls, .csv)</p>
+          <p class="hint">Kolom: <code>nama</code> + <code>no</code> dan/atau <code>instagram</code> (.csv / .xlsx)</p>
           <form id="upload-form">
             <input type="file" id="file" accept=".xlsx,.xls,.csv" required />
             <button type="submit">Upload &amp; Simpan</button>
@@ -57,9 +57,11 @@
           <h3>➕ Tambah Manual</h3>
           <form id="add-form" class="row-form">
             <input type="text" id="add-nama" placeholder="Nama" required />
-            <input type="text" id="add-no" placeholder="No. WhatsApp (08...)" required />
+            <input type="text" id="add-no" placeholder="No. WhatsApp (opsional)" />
+            <input type="text" id="add-ig" placeholder="Instagram @username (opsional)" />
             <button type="submit">Tambah</button>
           </form>
+          <p class="hint">Minimal isi salah satu: No. WA atau Instagram.</p>
           <p class="msg" id="add-msg"></p>
         </div>
       </div>
@@ -69,21 +71,38 @@
           <h3>📋 Daftar Undangan</h3>
           <div class="actions">
             <label class="chk"><input type="checkbox" id="only-unsent" checked /> hanya yang belum terkirim</label>
-            <button id="btn-kirim" class="btn-primary">📤 Kirim Undangan WhatsApp</button>
+            <button id="btn-kirim" class="btn-primary">📤 Kirim WhatsApp</button>
+            <button id="btn-ig" class="btn-ig">📷 Siapkan Instagram</button>
             <button id="btn-clear" class="btn-danger">Hapus Semua</button>
           </div>
         </div>
         <div class="table-wrap">
           <table id="tbl-undangan">
-            <thead><tr><th>#</th><th>Nama</th><th>No. WA</th><th>Status</th><th></th></tr></thead>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Nama</th>
+                <th>No. WA</th>
+                <th>Instagram</th>
+                <th>WA</th>
+                <th>IG</th>
+                <th></th>
+              </tr>
+            </thead>
             <tbody></tbody>
           </table>
         </div>
       </div>
 
       <div class="card" id="send-result-card" style="display:none">
-        <h3>Hasil Pengiriman</h3>
+        <h3>Hasil WhatsApp</h3>
         <div id="send-result"></div>
+      </div>
+
+      <div class="card" id="ig-result-card" style="display:none">
+        <h3>Instagram — salin pesan lalu buka DM</h3>
+        <p class="hint">Klik <b>Salin</b>, paste di DM Instagram, lalu buka chat. Centang selesai jika sudah dikirim.</p>
+        <div id="ig-result"></div>
       </div>
     </section>
 
@@ -111,6 +130,6 @@
     </section>
   </div>
 
-  <script src="admin.js"></script>
+  <script src="/admin/admin.js?v=3"></script>
 </body>
 </html>

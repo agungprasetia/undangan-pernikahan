@@ -263,7 +263,73 @@ img{display:block;max-width:100%}
 .closing-content p{font-size:1.15rem;line-height:1.8;margin-bottom:16px;max-width:380px;margin-inline:auto}
 .closing-thanks{font-family:var(--sans);font-size:.8rem;letter-spacing:.1em;margin-top:24px;color:var(--gold-light)}
 .closing-names{font-family:var(--script);font-size:3.4rem;color:#fff;margin-top:6px}
-.footer{background:var(--charcoal);color:var(--muted);text-align:center;padding:22px;font-family:var(--sans);font-size:.72rem}
+.footer{
+  background:linear-gradient(180deg,#1a1612 0%,#120f0c 100%);
+  color:var(--muted);
+  text-align:center;
+  padding:28px 20px 32px;
+  font-family:var(--sans);
+  position:relative;
+}
+.footer::before{
+  content:"";
+  position:absolute;top:0;left:50%;transform:translateX(-50%);
+  width:72px;height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+}
+.footer-credit{
+  display:inline-flex;
+  align-items:center;
+  gap:12px;
+  text-decoration:none;
+  color:inherit;
+  transition:transform .35s ease, color .35s ease;
+}
+.footer-credit:hover{color:var(--gold-light);transform:translateY(-1px)}
+.footer-made{
+  font-size:.68rem;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  opacity:.75;
+}
+.footer-heart{
+  display:inline-block;
+  color:#c45c5c;
+  margin:0 2px;
+  animation:heartBeat 1.8s ease-in-out infinite;
+}
+.footer-divider{
+  width:4px;height:4px;border-radius:50%;
+  background:var(--gold);
+  opacity:.55;
+}
+.footer-brand{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+}
+.footer-plane{
+  width:16px;height:16px;
+  fill:var(--gold-light);
+  transform:rotate(-18deg);
+  transition:transform .4s ease;
+}
+.footer-credit:hover .footer-plane{
+  transform:rotate(-18deg) translate(3px,-3px);
+}
+.footer-name{
+  font-family:var(--display);
+  font-size:.95rem;
+  letter-spacing:.04em;
+  color:#efe6d4;
+  font-weight:500;
+}
+@keyframes heartBeat{
+  0%,100%{transform:scale(1)}
+  35%{transform:scale(1.18)}
+  50%{transform:scale(1)}
+  65%{transform:scale(1.12)}
+}
 
 /* ===================== MUSIC ===================== */
 .music-toggle{

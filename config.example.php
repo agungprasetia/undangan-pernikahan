@@ -9,7 +9,7 @@ return [
     'db_host' => 'localhost',
     'db_name' => 'u619145000_undangan',   // ganti dengan nama database Hostinger
     'db_user' => 'u619145000_admin',      // ganti dengan username MySQL Hostinger
-    'db_pass' => '',  // ganti dengan password MySQL
+    'db_pass' => 'u619145000_adminA',  // ganti dengan password MySQL
 
     // --- Website ---
     'public_url' => 'https://elialutfiinvitations.com',
@@ -21,7 +21,7 @@ return [
     'admin_password' => 'admin123',
 
     // --- WhatsApp via Railway ---
-    'wa_service_url' => 'https://YOUR-RAILWAY-APP.up.railway.app',
+    'wa_service_url' => 'https://wa-service-production-056e.up.railway.app/',
     'wa_api_key' => 'buat-string-rahasia-panjang-di-sini',
     'wa_enabled' => true,
 ];

@@ -30,9 +30,19 @@ app.get('/qr', requireApiKey, (_req, res) => {
   res.json({ ok: true, qr: wa.getQr() });
 });
 
-app.post('/init', requireApiKey, (_req, res) => {
-  wa.init().catch(() => {});
-  res.json({ ok: true });
+app.post('/init', requireApiKey, (req, res) => {
+  const force = !!(req.body && req.body.force);
+  wa.init({ force }).catch((e) => console.error(e));
+  res.json({ ok: true, force });
+});
+
+app.post('/reset', requireApiKey, async (_req, res) => {
+  try {
+    const status = await wa.reset();
+    res.json({ ok: true, ...status });
+  } catch (e) {
+    res.status(500).json({ ok: false, error: e.message });
+  }
 });
 
 app.post('/logout', requireApiKey, async (_req, res) => {

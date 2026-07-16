@@ -17,8 +17,8 @@ $onlyUnsent = ($body['onlyUnsent'] ?? true) !== false;
 $pdo = db();
 
 $sql = $onlyUnsent
-    ? 'SELECT * FROM undangan WHERE sent = 0 ORDER BY id ASC'
-    : 'SELECT * FROM undangan ORDER BY id ASC';
+    ? "SELECT * FROM undangan WHERE sent = 0 AND no IS NOT NULL AND no != '' ORDER BY id ASC"
+    : "SELECT * FROM undangan WHERE no IS NOT NULL AND no != '' ORDER BY id ASC";
 $rows = $pdo->query($sql)->fetchAll();
 
 if (empty($rows)) {
@@ -33,7 +33,7 @@ foreach ($rows as $row) {
     $messages[] = [
         'id' => (int) $row['id'],
         'number' => $row['no'],
-        'text' => build_invitation_message($row['nama'], (int) $row['id']),
+        'text' => build_invitation_message($row['nama'], (int) $row['id'], 'wa'),
         'nama' => $row['nama'],
     ];
 }

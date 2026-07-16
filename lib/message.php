@@ -1,11 +1,13 @@
 <?php
 
-function build_invitation_message(string $nama, ?int $id = null): string
+function build_invitation_message(string $nama, ?int $id = null, string $channel = 'wa'): string
 {
     $cfg = app_config();
     $base = rtrim($cfg['public_url'], '/');
     $link = $id ? "{$base}/?id={$id}" : "{$base}/?to=" . rawurlencode($nama);
     $bahagia = $cfg['nama_bahagia'];
+    // WhatsApp mendukung *bold*, Instagram lebih aman plain text
+    $nameLine = $channel === 'ig' ? $bahagia : "*{$bahagia}*";
 
     return <<<MSG
 Kepada Yth.
@@ -22,6 +24,6 @@ Merupakan suatu kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan untuk
 Terima kasih banyak atas perhatiannya.
 
 Kami yang berbahagia
-*{$bahagia}*
+{$nameLine}
 MSG;
 }

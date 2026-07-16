@@ -11,29 +11,49 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit;
 }
 
-$pdo = db();
-$method = $_SERVER['REQUEST_METHOD'];
-
-if ($method === 'GET') {
-    $rows = $pdo->query(
-        'SELECT nama, pesan, kehadiran, created_at FROM komentar ORDER BY id DESC LIMIT 200'
-    )->fetchAll();
-    json_response($rows);
+function limit_str(string $s, int $len): string
+{
+    if (function_exists('mb_substr')) {
+        return mb_substr($s, 0, $len);
+    }
+    return substr($s, 0, $len);
 }
 
-if ($method === 'POST') {
-    $body = read_json_body();
-    $nama = mb_substr(trim((string) ($body['nama'] ?? '')), 0, 60);
-    $pesan = mb_substr(trim((string) ($body['pesan'] ?? '')), 0, 500);
-    $kehadiran = mb_substr(trim((string) ($body['kehadiran'] ?? 'Hadir')), 0, 30);
+try {
+    $pdo = db();
+    $method = $_SERVER['REQUEST_METHOD'];
 
-    if ($nama === '' || $pesan === '') {
-        json_response(['ok' => false, 'error' => 'Nama dan pesan wajib diisi'], 400);
+    if ($method === 'GET') {
+        $rows = $pdo->query(
+            'SELECT nama, pesan, kehadiran, created_at FROM komentar ORDER BY id DESC LIMIT 200'
+        )->fetchAll();
+        json_response($rows);
     }
 
-    $stmt = $pdo->prepare('INSERT INTO komentar (nama, pesan, kehadiran) VALUES (?, ?, ?)');
-    $stmt->execute([$nama, $pesan, $kehadiran]);
-    json_response(['ok' => true]);
-}
+    if ($method === 'POST') {
+        $body = read_json_body();
+        // fallback kalau body kosong (proxy / Content-Type aneh)
+        if (!$body && !empty($_POST)) {
+            $body = $_POST;
+        }
 
-json_response(['ok' => false, 'error' => 'Method not allowed'], 405);
+        $nama = limit_str(trim((string) ($body['nama'] ?? '')), 60);
+        $pesan = limit_str(trim((string) ($body['pesan'] ?? '')), 500);
+        $kehadiran = limit_str(trim((string) ($body['kehadiran'] ?? 'Hadir')), 30);
+
+        if ($nama === '' || $pesan === '') {
+            json_response(['ok' => false, 'error' => 'Nama dan pesan wajib diisi'], 400);
+        }
+
+        $stmt = $pdo->prepare('INSERT INTO komentar (nama, pesan, kehadiran) VALUES (?, ?, ?)');
+        $stmt->execute([$nama, $pesan, $kehadiran]);
+        json_response(['ok' => true]);
+    }
+
+    json_response(['ok' => false, 'error' => 'Method not allowed'], 405);
+} catch (Throwable $e) {
+    json_response([
+        'ok' => false,
+        'error' => $e->getMessage(),
+    ], 500);
+}

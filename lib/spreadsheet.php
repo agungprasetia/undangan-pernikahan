@@ -19,7 +19,7 @@ function parse_spreadsheet(string $filePath, string $originalName): array
             return parse_xlsx_phpspreadsheet($filePath);
         }
         throw new RuntimeException(
-            'File .xlsx butuh PhpSpreadsheet. Jalankan "composer install" di folder php/, atau simpan spreadsheet sebagai .csv'
+            'File .xlsx butuh PhpSpreadsheet. Jalankan "composer install", atau simpan spreadsheet sebagai .csv'
         );
     }
 
@@ -71,22 +71,37 @@ function parse_xlsx_phpspreadsheet(string $filePath): array
 
 function insert_undangan_rows(array $rows): array
 {
+    require_once __DIR__ . '/instagram.php';
+    ensure_undangan_instagram_columns();
+
     $pdo = db();
-    $insert = $pdo->prepare('INSERT INTO undangan (no, nama) VALUES (?, ?)');
+    $insert = $pdo->prepare('INSERT INTO undangan (no, instagram, nama) VALUES (?, ?, ?)');
     $inserted = 0;
     $skipped = 0;
 
     $pdo->beginTransaction();
     try {
         foreach ($rows as $row) {
-            [$noKey, $namaKey] = find_spreadsheet_keys($row);
-            $no = $noKey ? trim((string) $row[$noKey]) : '';
+            [$noKey, $namaKey, $igKey] = find_spreadsheet_keys($row);
             $nama = $namaKey ? trim((string) $row[$namaKey]) : '';
-            if (!$no || !$nama) {
+            $noRaw = $noKey ? trim((string) $row[$noKey]) : '';
+            $igRaw = $igKey ? trim((string) $row[$igKey]) : '';
+
+            if ($nama === '') {
                 $skipped++;
                 continue;
             }
-            $insert->execute([$no, $nama]);
+
+            $no = $noRaw !== '' ? normalize_wa_number($noRaw) : null;
+            $ig = $igRaw !== '' ? normalize_instagram($igRaw) : null;
+
+            // Minimal: harus ada WA atau Instagram
+            if (!$no && !$ig) {
+                $skipped++;
+                continue;
+            }
+
+            $insert->execute([$no, $ig, $nama]);
             $inserted++;
         }
         $pdo->commit();

@@ -46,7 +46,9 @@ function wa_service_request(string $method, string $path, ?array $body = null): 
 
     if ($httpCode >= 400) {
         $data['ok'] = false;
-        if (!isset($data['error'])) {
+        if ($httpCode === 401) {
+            $data['error'] = 'Unauthorized dari Railway — WA_API_KEY di Railway harus SAMA dengan wa_api_key di config.php';
+        } elseif (!isset($data['error'])) {
             $data['error'] = 'HTTP ' . $httpCode;
         }
     }
@@ -70,9 +72,14 @@ function wa_get_qr(): array
     return wa_service_request('GET', '/qr');
 }
 
-function wa_init(): array
+function wa_init(bool $force = true): array
 {
-    return wa_service_request('POST', '/init');
+    return wa_service_request('POST', '/init', ['force' => $force]);
+}
+
+function wa_reset(): array
+{
+    return wa_service_request('POST', '/reset');
 }
 
 function wa_logout(): array

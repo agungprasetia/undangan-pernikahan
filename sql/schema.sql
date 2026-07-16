@@ -1,15 +1,20 @@
--- Database: undangan (buat di hPanel Hostinger → MySQL Databases)
+-- Database: undangan
 -- Jalankan di phpMyAdmin setelah database dibuat
 
 CREATE TABLE IF NOT EXISTS undangan (
   id INT AUTO_INCREMENT PRIMARY KEY,
-  no VARCHAR(20) NOT NULL,
+  no VARCHAR(20) NULL,
+  instagram VARCHAR(60) NULL,
   nama VARCHAR(100) NOT NULL,
   sent TINYINT(1) NOT NULL DEFAULT 0,
+  sent_ig TINYINT(1) NOT NULL DEFAULT 0,
   sent_at DATETIME NULL,
+  sent_ig_at DATETIME NULL,
   created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   INDEX idx_undangan_sent (sent),
-  INDEX idx_undangan_nama (nama)
+  INDEX idx_undangan_sent_ig (sent_ig),
+  INDEX idx_undangan_nama (nama),
+  INDEX idx_undangan_instagram (instagram)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS komentar (

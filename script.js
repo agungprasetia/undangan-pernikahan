@@ -109,9 +109,16 @@
 
   async function loadWishes() {
     try {
-      const res = await fetch('/api/komentar');
-      const data = await res.json();
-      if (!data.length) {
+      const res = await fetch('/api/komentar.php');
+      const raw = await res.text();
+      let data;
+      try {
+        data = JSON.parse(raw);
+      } catch (e) {
+        wishList.innerHTML = '<p style="text-align:center;color:#b3403a;font-family:Poppins,sans-serif;font-size:.8rem">Gagal memuat ucapan. Pastikan tabel komentar sudah dibuat di MySQL.</p>';
+        return;
+      }
+      if (!Array.isArray(data) || !data.length) {
         wishList.innerHTML = '<p style="text-align:center;color:#8c8172;font-family:Poppins,sans-serif;font-size:.8rem">Belum ada ucapan. Jadilah yang pertama!</p>';
         return;
       }
@@ -141,14 +148,24 @@
     wishStatus.textContent = 'Mengirim...';
     wishStatus.className = 'wish-status';
     try {
-      const res = await fetch('/api/komentar', {
+      const res = await fetch('/api/komentar.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body),
       });
-      const data = await res.json();
+      const raw = await res.text();
+      let data;
+      try {
+        data = JSON.parse(raw);
+      } catch (parseErr) {
+        throw new Error(
+          raw
+            ? ('Server error: ' + raw.slice(0, 120))
+            : ('HTTP ' + res.status + ' — respons kosong. Cek tabel komentar di MySQL / config.php')
+        );
+      }
       if (data.ok) {
-        wishStatus.textContent = 'Terima kasih atas ucapannya! 💐';
+        wishStatus.textContent = 'Terima kasih atas ucapannya!';
         wishStatus.className = 'wish-status ok';
         wishForm.querySelector('textarea').value = '';
         loadWishes();

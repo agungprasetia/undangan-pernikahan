@@ -52,7 +52,16 @@ code{background:#00000040;padding:1px 6px;border-radius:5px;color:var(--gold);fo
 .actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 .chk{font-size:.76rem;color:var(--muted);display:flex;align-items:center;gap:6px;cursor:pointer}
 .btn-primary{padding:10px 16px;border:none;border-radius:9px;background:var(--green);color:#03210f;font-weight:600;cursor:pointer;font-size:.82rem}
+.btn-ig{padding:10px 16px;border:none;border-radius:9px;background:#c13584;color:#fff;font-weight:600;cursor:pointer;font-size:.82rem}
+.btn-ig:hover{filter:brightness(1.08)}
 .btn-danger{padding:10px 16px;border:1px solid var(--red);border-radius:9px;background:transparent;color:var(--red);cursor:pointer;font-size:.82rem}
+.btn-mini{padding:5px 10px;border:1px solid var(--line);border-radius:7px;background:var(--panel-2);color:var(--text);cursor:pointer;font-size:.72rem;margin-right:4px}
+.btn-mini.ig{border-color:#c13584;color:#f5a3cf}
+.btn-mini.ok{border-color:var(--green);color:var(--green)}
+.ig-row{display:flex;flex-direction:column;gap:8px;padding:12px;border-bottom:1px solid var(--line)}
+.ig-row-top{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center}
+.ig-actions{display:flex;gap:6px;flex-wrap:wrap}
+.ig-pesan{font-size:.75rem;color:var(--muted);white-space:pre-wrap;background:var(--panel-2);border-radius:8px;padding:10px;max-height:120px;overflow:auto}
 
 .table-wrap{overflow-x:auto}
 table{width:100%;border-collapse:collapse;font-size:.83rem}

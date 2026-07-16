@@ -7,8 +7,26 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     json_response(['ok' => false, 'error' => 'Method not allowed'], 405);
 }
 
-$body = read_json_body();
-if (admin_login((string) ($body['password'] ?? ''))) {
-    json_response(['ok' => true]);
+try {
+    $body = read_json_body();
+    $password = trim((string) ($body['password'] ?? $_POST['password'] ?? ''));
+
+    if ($password === '') {
+        json_response(['ok' => false, 'error' => 'Password kosong'], 400);
+    }
+
+    $cfg = app_config();
+    $expected = trim((string) ($cfg['admin_password'] ?? ''));
+
+    if ($expected === '') {
+        json_response(['ok' => false, 'error' => 'admin_password belum diisi di config.php'], 500);
+    }
+
+    if (admin_login($password)) {
+        json_response(['ok' => true]);
+    }
+
+    json_response(['ok' => false, 'error' => 'Password salah'], 401);
+} catch (Throwable $e) {
+    json_response(['ok' => false, 'error' => $e->getMessage()], 500);
 }
-json_response(['ok' => false, 'error' => 'Password salah'], 401);
